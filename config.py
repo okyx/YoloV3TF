@@ -38,3 +38,8 @@ ANCHORS = [
     [(0.07, 0.15), (0.15, 0.11), (0.14, 0.29)],
     [(0.02, 0.03), (0.04, 0.07), (0.08, 0.06)],
 ]
+IMAGE_SIZE = 416
+BATCH_SIZE = 32
+LABEL_PATH ='./assets/labels'
+CSV_PATH = './assets/tes.csv'
+IMAGE_PATH = './assets//images'

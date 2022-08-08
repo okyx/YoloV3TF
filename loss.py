@@ -9,7 +9,6 @@ class YOLOLoss(tf.keras.Model):
     self.bce = tf.keras.losses.BinaryCrossentropy(from_logits=True)
     self.mse = tf.keras.losses.MeanSquaredError()
     self.sparse = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
-    # self.sigmoids = tf.keras.activations.sigmoid()
     self.lambda_class = 1
     self.lambda_noobj = 10
     self.lambda_obj = 1
@@ -62,8 +61,8 @@ if __name__ == '__main__':
   scaled = S*ANCHORS
   loss = YOLOLoss()
   for i in range(3): 
-    target = tf.Variable(np.zeros((1,S[0][0][0],S[0][0][0],3,6)))
-    prediction = tf.Variable(np.zeros((1,S[0][0][0],S[0][0][0],3*(20+5))))
+    target = tf.Variable(np.zeros((32,S[0][0][0],S[0][0][0],3,6)))
+    prediction = tf.Variable(np.zeros((32,S[0][0][0],S[0][0][0],3*(20+5))))
     score = loss(target,prediction,scaled[i])
     assert score.numpy() - 6.9314 < 1e-4
   print('all test passed')
