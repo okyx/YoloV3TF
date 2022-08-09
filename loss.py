@@ -48,10 +48,9 @@ class YOLOLoss(tf.keras.Model):
     boxloss = self.mse(target[...,1:5][isObj],prediction[...,1:5][isObj])
 
     #obj loss
-    box_pred = tf.concat([prediction[...,1:3],tf.exp(prediction[...,3:5])*anchors],axis=-1)
+    box_pred = tf.concat([prediction[...,1:3],tf.exp(prediction[...,3:5])*tf.cast(anchors,dtype=tf.float32)],axis=-1)
     iouScore = iou(box_pred[isObj], target[..., 1:5][isObj])
     objloss = self.mse(iouScore*target[...,0:1][isObj],prediction[...,0:1][isObj])
-
     totalloss = (self.lambda_noobj*noobjloss) + (self.lambda_class*classloss)  + (self.lambda_box*boxloss) + (self.lambda_obj*objloss)
     return totalloss
   
@@ -61,8 +60,8 @@ if __name__ == '__main__':
   scaled = S*ANCHORS
   loss = YOLOLoss()
   for i in range(3): 
-    target = tf.Variable(np.zeros((32,S[0][0][0],S[0][0][0],3,6)))
-    prediction = tf.Variable(np.zeros((32,S[0][0][0],S[0][0][0],3*(20+5))))
+    target = tf.Variable(np.zeros((1,S[0][0][0],S[0][0][0],3,6)),dtype=tf.float32)
+    prediction = tf.Variable(np.zeros((1,S[0][0][0],S[0][0][0],3*(20+5))),dtype=tf.float32)
     score = loss(target,prediction,scaled[i])
     assert score.numpy() - 6.9314 < 1e-4
   print('all test passed')

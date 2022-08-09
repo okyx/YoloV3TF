@@ -43,3 +43,6 @@ BATCH_SIZE = 32
 LABEL_PATH ='./assets/labels'
 CSV_PATH = './assets/tes.csv'
 IMAGE_PATH = './assets//images'
+NUM_EPOCHS = 25
+CLASS_THRESHOLD = 0.8
+NMS_THRESHOLD=0.5
